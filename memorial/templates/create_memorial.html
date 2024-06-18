@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Memorial</title>
+</head>
+<body>
+    <h1>Create Memorial</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea><br><br>
+        <input type="submit" value="Create Memorial">
+    </form>
+
+    {% if qr_code_url %}
+        <h2>QR Code:</h2>
+        <img src="{{ qr_code_url }}" alt="QR Code">
+    {% endif %}
+</body>
+</html>
