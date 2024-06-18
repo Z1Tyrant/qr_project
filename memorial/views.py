@@ -12,15 +12,16 @@ def create_memorial(request):
         # Crear un nuevo memorial
         memorial = Memorial.objects.create(name=name, description=description)
         
-        # Imprimir información de depuración sobre el memorial creado
-        print(f"Memorial creado: {memorial}")
+        # Generar la URL del memorial
+        memorial_url = request.build_absolute_uri(memorial.get_absolute_url())
         
-        # Generar la URL del código QR y actualizar el modelo
-        qr_code_url = generate_qr_code(memorial)
-        memorial.qr_code_url = qr_code_url
+        # Generar el código QR con el enlace al memorial
+        qr_code_path = generate_qr_code(memorial_url)
+        
+        # Actualizar el modelo del memorial con la URL del código QR
+        memorial.qr_code_url = qr_code_path
         memorial.save()
 
-        # Redirigir a la página de visualización del memorial
         return redirect('view_memorial', unique_id=memorial.unique_id)
 
     return render(request, 'create_memorial.html')
